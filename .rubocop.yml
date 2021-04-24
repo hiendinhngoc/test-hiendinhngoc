@@ -21,6 +21,8 @@ AllCops:
     - db/migrate/*.rb
     - tmp/**/*
     - vendor/**/*
+    - config/initializers/devise.rb
+    - lib/tasks/cucumber.rake
 
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent

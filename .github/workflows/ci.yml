@@ -87,7 +87,8 @@ jobs:
           DISABLE_SPRING: 1
           # RAILS_main_KEY: ${{ secrets.RAILS_main_KEY }}
         run: |
-          bundle exec rails db:prepare --trace
+          bundle exec rails db:create --trace
+          bundle exec rails db:migrate --trace
       - name: Run tests
         env:
           RAILS_ENV: test

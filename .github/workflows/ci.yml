@@ -46,7 +46,6 @@ jobs:
         ruby-version: ['2.7.1']
     services:
       postgres:
-         postgres:
         image: postgres:11
         env:
           POSTGRES_USER: hien

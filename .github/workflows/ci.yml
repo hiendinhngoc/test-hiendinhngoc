@@ -26,6 +26,13 @@ jobs:
         uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
         with:
           ruby-version: ${{ matrix.ruby-version }}
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-rubocop-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-rubocop-
       - name: Install gems
         run: |
           bundle config path vendor/bundle
@@ -37,7 +44,15 @@ jobs:
     strategy:
       matrix:
         ruby-version: ['2.7.1']
-
+    services:
+      postgres:
+         postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: hien
+          POSTGRES_DB: test_hiendinngoc_test
+          POSTGRES_PASSWORD: "12345678"
+        ports: ["5432:5432"]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -47,7 +62,14 @@ jobs:
         uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
         with:
           ruby-version: ${{ matrix.ruby-version }}
-        # bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Install gems
         run: |
           bundle config path vendor/bundle
@@ -59,11 +81,11 @@ jobs:
       - name: Setup Database
         env:
           RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: hien
           # RAILS_main_KEY: ${{ secrets.RAILS_main_KEY }}
         run: |
-          sudo -u postgres psql --command="CREATE USER psql_ci_user PASSWORD 'somestrong_pw'" --command="\du"
-          bundle exec rails db:create --trace
-          bundle exec rails db:migrate --trace
+          bundle exec rails db:setup --trace
       - name: Run tests
         env:
           RAILS_ENV: test

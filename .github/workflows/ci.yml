@@ -26,13 +26,6 @@ jobs:
         uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
         with:
           ruby-version: ${{ matrix.ruby-version }}
-      - name: Cache gems
-        uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-rubocop-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-rubocop-
       - name: Install gems
         run: |
           bundle config path vendor/bundle
@@ -55,13 +48,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
         # bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      - name: Ruby gem cache
-        uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
       - name: Install gems
         run: |
           bundle config path vendor/bundle

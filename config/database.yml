@@ -26,7 +26,7 @@ development:
   <<: *default
   database: test_hiendinhngoc_development
   host: localhost
-  <% if Rails.application.credentials[:db].present? %>
+  <% if Rails.application.credentials.present? %>
   username: <%= Rails.application.credentials[:db][:user_name] %>
   password: <%= Rails.application.credentials[:db][:password] %>
   <% end %>

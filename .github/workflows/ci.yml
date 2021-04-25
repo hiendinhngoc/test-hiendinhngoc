@@ -85,12 +85,12 @@ jobs:
           RAILS_ENV: test
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
-          RAILS_MAIN_KEY: ${{ secrets.RAILS_MAIN_KEY }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bundle exec rails db:create --trace
           bundle exec rails db:migrate --trace
       - name: Run tests
         env:
           RAILS_ENV: test
-          RAILS_MAIN_KEY: ${{ secrets.RAILS_MAIN_KEY }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rspec spec

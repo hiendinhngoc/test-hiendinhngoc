@@ -28,6 +28,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # gem 'rack-cors'
 
 gem 'devise'
+# gem 'figaro'
+gem 'knock', github: 'nsarno/knock', branch: 'master',
+    ref: '9214cd027422df8dc31eb67c60032fbbf8fc100b'
+gem 'koala'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

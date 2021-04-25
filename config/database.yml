@@ -17,6 +17,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: localhost
+  username: <%= Rails.application.credentials.db[:user_name] %>
+  password: <%= Rails.application.credentials.db[:password] %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -59,8 +62,8 @@ test:
   <<: *default
   database: <%= ENV.fetch('PG_DATABASE', 'test_hiendinhngoc_test') %>
   host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
-  username: <%= ENV.fetch('PG_USER', nil) %>
-  password: <%= ENV.fetch('PG_PASSWORD', nil) %>
+  username: <%= ENV.fetch('PG_USER', Rails.application.credentials.db[:user_name]) %>
+  password: <%= ENV.fetch('PG_PASSWORD', Rails.application.credentials.db[:password]) %>
   port:     <%= ENV.fetch('PG_PORT', 5432) %>
 
 # As with config/credentials.yml, you never want to store sensitive information,

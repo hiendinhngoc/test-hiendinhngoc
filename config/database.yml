@@ -62,8 +62,8 @@ test:
   <<: *default
   database: <%= ENV.fetch('PG_DATABASE', 'test_hiendinhngoc_test') %>
   host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
-  username: <%= ENV.fetch('PG_USER', Rails.application.credentials.db[:user_name]) %>
-  password: <%= ENV.fetch('PG_PASSWORD', Rails.application.credentials.db[:password]) %>
+  username: <%= ENV.fetch('PG_USER', nil) %>
+  password: <%= ENV.fetch('PG_PASSWORD', nil) %>
   port:     <%= ENV.fetch('PG_PORT', 5432) %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
